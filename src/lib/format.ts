@@ -1,14 +1,9 @@
 import type { Listing } from './types';
 
-const currency = new Intl.NumberFormat('en-AE', {
+const currency = new Intl.NumberFormat('en-IN', {
   style: 'currency',
-  currency: 'AED',
+  currency: 'INR',
   maximumFractionDigits: 0,
-});
-
-const compact = new Intl.NumberFormat('en-AE', {
-  notation: 'compact',
-  maximumFractionDigits: 1,
 });
 
 export function formatPrice(listing: Pick<Listing, 'price' | 'listingType'>): string {
@@ -16,12 +11,15 @@ export function formatPrice(listing: Pick<Listing, 'price' | 'listingType'>): st
   return listing.listingType === 'rent' ? `${base}/mo` : base;
 }
 
+/** Indian short form: lakh (L) and crore (Cr). */
 export function formatCompactPrice(value: number): string {
-  return `AED ${compact.format(value)}`;
+  if (value >= 1_00_00_000) return `₹${(value / 1_00_00_000).toFixed(2)} Cr`;
+  if (value >= 1_00_000) return `₹${(value / 1_00_000).toFixed(1)} L`;
+  return `₹${new Intl.NumberFormat('en-IN').format(value)}`;
 }
 
 export function formatArea(sqft: number): string {
-  return `${new Intl.NumberFormat('en-AE').format(sqft)} sqft`;
+  return `${new Intl.NumberFormat('en-IN').format(sqft)} sqft`;
 }
 
 export function formatBeds(beds: number): string {

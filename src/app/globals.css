@@ -12,8 +12,9 @@
   --danger: #e11d48;
 }
 
+/* System preference wins unless the user explicitly chose light. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --background: #0a0f14;
     --surface: #141b22;
     --foreground: #e6edf3;
@@ -24,6 +25,19 @@
     --accent: #10201f;
     --danger: #fb7185;
   }
+}
+
+/* Explicit choice via the theme toggle (Context API) overrides the media query. */
+:root[data-theme='dark'] {
+  --background: #0a0f14;
+  --surface: #141b22;
+  --foreground: #e6edf3;
+  --muted: #8b98a5;
+  --border: #232d38;
+  --primary: #2dd4bf;
+  --primary-fg: #04211f;
+  --accent: #10201f;
+  --danger: #fb7185;
 }
 
 @theme inline {

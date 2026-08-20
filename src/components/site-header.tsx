@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useFavourites } from '@/hooks/use-favourites';
 import { AuthButton } from './auth-button';
+import { ThemeToggle } from './theme-toggle';
 
 const NAV = [
   { href: '/', label: 'Search' },
@@ -51,7 +52,8 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-3">
+          <ThemeToggle />
           <AuthButton />
         </div>
       </div>

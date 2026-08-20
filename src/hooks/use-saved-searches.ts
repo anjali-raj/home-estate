@@ -1,50 +1,32 @@
 'use client';
 
 import { useCallback } from 'react';
-import { useUserStore } from './use-user-store';
+import { useAppDispatch, useAppSelector } from '@/store';
+import {
+  addSavedSearch,
+  removeSavedSearch,
+  type SavedSearch,
+} from '@/store/saved-searches-slice';
 
-export type SavedSearch = {
-  id: string;
-  label: string;
-  /** serialized URLSearchParams string, e.g. "city=Dubai&minBeds=2" */
-  query: string;
-  createdAt: string;
-};
+export type { SavedSearch };
 
 export function useSavedSearches() {
-  const [searches, setSearches, isReady] = useUserStore<SavedSearch[]>(
-    'saved-searches',
-    [],
-  );
+  const dispatch = useAppDispatch();
+  const searches = useAppSelector((s) => s.savedSearches.items);
+  const hydrated = useAppSelector((s) => s.savedSearches.hydrated);
 
   const save = useCallback(
-    (label: string, query: string) => {
-      const entry: SavedSearch = {
-        // deterministic-ish id without Date.now collisions across quick saves
-        id: `${query}::${label}`,
-        label,
-        query,
-        createdAt: new Date().toISOString(),
-      };
-      setSearches((prev) => {
-        const withoutDup = prev.filter((s) => s.query !== query);
-        return [entry, ...withoutDup];
-      });
-    },
-    [setSearches],
+    (label: string, query: string) => dispatch(addSavedSearch(label, query)),
+    [dispatch],
   );
-
   const remove = useCallback(
-    (id: string) => {
-      setSearches((prev) => prev.filter((s) => s.id !== id));
-    },
-    [setSearches],
+    (id: string) => dispatch(removeSavedSearch(id)),
+    [dispatch],
   );
-
   const exists = useCallback(
     (query: string) => searches.some((s) => s.query === query),
     [searches],
   );
 
-  return { searches, save, remove, exists, isReady };
+  return { searches, save, remove, exists, isReady: hydrated };
 }

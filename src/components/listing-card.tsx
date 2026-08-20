@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Listing } from '@/lib/types';
+import { PROPERTY_TYPE_LABELS, type Listing } from '@/lib/types';
 import { formatArea, formatBeds, formatPrice, relativeDate, titleCase } from '@/lib/format';
 import { FavouriteButton } from './favourite-button';
 
@@ -38,7 +38,7 @@ export function ListingCard({ listing }: { listing: Listing }) {
         </div>
 
         <p className="mt-auto pt-3 text-xs text-muted">
-          {titleCase(listing.propertyType)} · Listed {relativeDate(listing.createdAt)}
+          {PROPERTY_TYPE_LABELS[listing.propertyType]} · Listed {relativeDate(listing.createdAt)}
         </p>
       </div>
     </Link>

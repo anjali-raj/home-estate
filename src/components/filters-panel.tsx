@@ -3,6 +3,7 @@
 import { useListingFilters } from '@/hooks/use-listing-filters';
 import {
   LISTING_TYPES,
+  PROPERTY_TYPE_LABELS,
   PROPERTY_TYPES,
   type ListingsResponse,
 } from '@/lib/types';
@@ -68,7 +69,7 @@ export function FiltersPanel({ facets, total }: Props) {
           id="f-q"
           value={filters.q}
           onChange={(e) => patch({ q: e.target.value })}
-          placeholder="Marina, Downtown…"
+          placeholder="Bengaluru, Central"
           className={`mt-1 ${selectCls}`}
         />
       </div>
@@ -119,7 +120,7 @@ export function FiltersPanel({ facets, total }: Props) {
         >
           <option value="">Any type</option>
           {PROPERTY_TYPES.map((t) => (
-            <option key={t} value={t}>{titleCase(t)}</option>
+            <option key={t} value={t}>{PROPERTY_TYPE_LABELS[t]}</option>
           ))}
         </select>
       </div>

@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { queryListings, getListingById } from '@/lib/listings-repo';
 import { searchParamsSchema } from '@/lib/types';
 
@@ -14,19 +13,20 @@ describe('queryListings', () => {
   });
 
   it('filters by city', () => {
-    const res = queryListings(parse({ city: 'Dubai', pageSize: '48' }));
-    expect(res.results.every((l) => l.city === 'Dubai')).toBe(true);
+    const res = queryListings(parse({ city: 'Mumbai', pageSize: '48' }));
+    expect(res.results.every((l) => l.city === 'Mumbai')).toBe(true);
     expect(res.total).toBe(
-      res.facets.cities.find((c) => c.value === 'Dubai')!.count,
+      res.facets.cities.find((c) => c.value === 'Mumbai')!.count,
     );
   });
 
   it('respects a price range', () => {
     const res = queryListings(
-      parse({ minPrice: '500000', maxPrice: '900000', pageSize: '48' }),
+      parse({ minPrice: '30000', maxPrice: '80000', pageSize: '48' }),
     );
+    expect(res.total).toBeGreaterThan(0);
     expect(
-      res.results.every((l) => l.price >= 500_000 && l.price <= 900_000),
+      res.results.every((l) => l.price >= 30_000 && l.price <= 80_000),
     ).toBe(true);
   });
 
@@ -50,18 +50,18 @@ describe('queryListings', () => {
 
   it('combines filters (AND semantics)', () => {
     const res = queryListings(
-      parse({ city: 'Dubai', listingType: 'rent', minBeds: '2', pageSize: '48' }),
+      parse({ city: 'Mumbai', listingType: 'rent', minBeds: '2', pageSize: '48' }),
     );
     expect(
       res.results.every(
-        (l) => l.city === 'Dubai' && l.listingType === 'rent' && l.beds >= 2,
+        (l) => l.city === 'Mumbai' && l.listingType === 'rent' && l.beds >= 2,
       ),
     ).toBe(true);
   });
 
   it('computes stable facets over the whole dataset regardless of filters', () => {
     const all = queryListings(parse({}));
-    const filtered = queryListings(parse({ city: 'Dubai' }));
+    const filtered = queryListings(parse({ city: 'Mumbai' }));
     expect(filtered.facets.cities).toEqual(all.facets.cities);
     expect(filtered.facets.priceRange).toEqual(all.facets.priceRange);
   });

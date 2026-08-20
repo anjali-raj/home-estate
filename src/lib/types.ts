@@ -3,10 +3,20 @@ import { z } from 'zod';
 export const PROPERTY_TYPES = [
   'apartment',
   'villa',
-  'townhouse',
+  'independent-house',
+  'builder-floor',
   'penthouse',
   'studio',
 ] as const;
+
+export const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
+  apartment: 'Apartment',
+  villa: 'Villa',
+  'independent-house': 'Independent House',
+  'builder-floor': 'Builder Floor',
+  penthouse: 'Penthouse',
+  studio: 'Studio',
+};
 
 export const LISTING_TYPES = ['sale', 'rent'] as const;
 

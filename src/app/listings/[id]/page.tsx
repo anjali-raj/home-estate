@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getListingById, getListingIds } from '@/lib/listings-repo';
+import { PROPERTY_TYPE_LABELS } from '@/lib/types';
 import {
   formatArea,
   formatBeds,
@@ -43,7 +44,7 @@ export default async function ListingPage({ params }: Params) {
   if (!listing) notFound();
 
   const stats = [
-    { label: 'Type', value: titleCase(listing.propertyType) },
+    { label: 'Type', value: PROPERTY_TYPE_LABELS[listing.propertyType] },
     { label: 'Bedrooms', value: formatBeds(listing.beds) },
     { label: 'Bathrooms', value: String(listing.baths) },
     { label: 'Area', value: formatArea(listing.area) },

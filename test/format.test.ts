@@ -1,12 +1,26 @@
-import { describe, expect, it } from 'vitest';
-import { formatArea, formatBeds, formatPrice, titleCase } from '@/lib/format';
+import {
+  formatArea,
+  formatBeds,
+  formatCompactPrice,
+  formatPrice,
+  titleCase,
+} from '@/lib/format';
 
 describe('formatters', () => {
-  it('formats sale vs rent price', () => {
-    expect(formatPrice({ price: 1_200_000, listingType: 'sale' })).toContain(
-      '1,200,000',
-    );
-    expect(formatPrice({ price: 8000, listingType: 'rent' })).toMatch(/\/mo$/);
+  it('formats sale price in INR', () => {
+    const out = formatPrice({ price: 12_500_000, listingType: 'sale' });
+    expect(out).toContain('₹');
+    expect(out).toContain('1,25,00,000'); // Indian digit grouping
+  });
+
+  it('suffixes rent with /mo', () => {
+    expect(formatPrice({ price: 55_000, listingType: 'rent' })).toMatch(/\/mo$/);
+  });
+
+  it('formats compact price as lakh / crore', () => {
+    expect(formatCompactPrice(4_500_000)).toBe('₹45.0 L');
+    expect(formatCompactPrice(23_000_000)).toBe('₹2.30 Cr');
+    expect(formatCompactPrice(50_000)).toBe('₹50,000');
   });
 
   it('labels studios and pluralises beds', () => {

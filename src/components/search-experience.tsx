@@ -6,8 +6,12 @@ import {
   useListingFilters,
 } from '@/hooks/use-listing-filters';
 import { useListings } from '@/hooks/use-listings';
-import { SORT_OPTIONS, type SortOption } from '@/lib/types';
-import { titleCase } from '@/lib/format';
+import {
+  PROPERTY_TYPE_LABELS,
+  SORT_OPTIONS,
+  type PropertyType,
+  type SortOption,
+} from '@/lib/types';
 import { FiltersPanel } from './filters-panel';
 import {
   EmptyState,
@@ -28,7 +32,7 @@ const SORT_LABELS: Record<SortOption, string> = {
 /** Human-readable summary used to label a saved search. */
 function describeFilters(f: Record<string, unknown>): string {
   const parts: string[] = [];
-  if (f.propertyType) parts.push(titleCase(String(f.propertyType)));
+  if (f.propertyType) parts.push(PROPERTY_TYPE_LABELS[f.propertyType as PropertyType]);
   else parts.push('Properties');
   if (f.listingType) parts.push(`for ${f.listingType}`);
   if (f.city) parts.push(`in ${f.city}`);
