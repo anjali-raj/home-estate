@@ -55,6 +55,37 @@ const CITIES: {
   },
 ];
 
+// Curated, verified Unsplash photos (interiors for flats, facades for houses).
+const img = (id: string) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=70`;
+
+// Categorised by visual inspection (see contact sheet).
+const INTERIOR_PHOTOS = [
+  '1600607687939-ce8a6c25118c', // living room
+  '1600566753086-00f18fb6b3ea', // living room
+  '1600210492486-724fe5c67fb0', // living room
+  '1600566752355-35792bedcfea', // bathroom
+  '1600585152220-90363fe7e115', // kitchen
+  '1560448204-e02f11c3d0e2', // living room
+  '1522708323590-d24dbb6b0267', // open-plan living/dining
+  '1502672260266-1c1ef2d93688', // cosy sitting area
+  '1615529182904-14819c35db37', // living room
+  '1502005229762-cf1b2da7c5d6', // staircase / interior
+  '1493809842364-78817add7ffb', // living room
+].map(img);
+
+const EXTERIOR_PHOTOS = [
+  '1600585154340-be6161a56a0c', // modern house at dusk
+  '1600047509807-ba8f99d2cdde', // modern house facade
+  '1583608205776-bfd35f0d9f83', // suburban house
+  '1512917774080-9991f1c4c750', // house with pool
+  '1568605114967-8130f3a36994', // A-frame house
+  '1570129477492-45c003edd2be', // suburban house
+  '1580587771525-78b9dba3b914', // modern villa with pool
+].map(img);
+
+const HOUSE_TYPES: PropertyType[] = ['villa', 'independent-house'];
+
 const AMENITIES = [
   'Balcony', 'Swimming Pool', 'Gym', 'Covered Parking', 'Power Backup',
   'Modular Kitchen', '24x7 Security', 'Clubhouse', 'Servant Room', 'Pet Friendly',
@@ -124,10 +155,19 @@ function makeListing(i: number): Listing {
     // Jitter around the city centre so points cluster realistically.
     lat: center[0] + faker.number.float({ min: -0.08, max: 0.08 }),
     lng: center[1] + faker.number.float({ min: -0.08, max: 0.08 }),
-    images: Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, (_, k) =>
-      // picsum: stable per id+index, no API key, works offline-ish in dev
-      `https://picsum.photos/seed/${i + 1}-${k}/800/600`,
-    ),
+    // Houses lead with a facade shot, flats with an interior; the gallery then
+    // mixes both so every listing shows rooms and (where relevant) the building.
+    images: (() => {
+      const isHouse = HOUSE_TYPES.includes(propertyType);
+      const hero = faker.helpers.arrayElement(
+        isHouse ? EXTERIOR_PHOTOS : INTERIOR_PHOTOS,
+      );
+      const rest = faker.helpers.arrayElements(
+        [...INTERIOR_PHOTOS, ...EXTERIOR_PHOTOS].filter((u) => u !== hero),
+        faker.number.int({ min: 3, max: 5 }),
+      );
+      return [hero, ...rest];
+    })(),
     agent: {
       name: faker.person.fullName(),
       agency: `${faker.company.name()} Realtors`,

@@ -1,6 +1,6 @@
-# EstateFinder
+# Home Estate
 
-A real-estate listing search platform for the **Indian market** — the kind of consumer
+A real-estate listing search platform for the **Indian market** — buy and rent — the kind of consumer
 property portal you'd find at MagicBricks, 99acres, or Housing.com — built to demonstrate
 production-grade frontend architecture: server-rendered SEO pages, URL-as-state faceted
 search, Redux + Context state management, and per-user persistence.
@@ -14,8 +14,11 @@ search, Redux + Context state management, and per-user persistence.
 
 | Area | What it shows |
 | --- | --- |
+| **Buy & rent** | Prominent **Buy / Rent / All** tabs plus a purpose filter, both driven by the same URL state. |
 | **Faceted search** | Keyword, city, purpose, type, price range, beds/baths, furnishing — all **URL-synced** via `nuqs`, so every search is shareable, bookmarkable and back-button-correct. |
-| **SEO** | Listing detail pages are **statically generated** (`generateStaticParams`) with per-page `generateMetadata` (title, description, Open Graph). 220 pages pre-rendered at build. |
+| **Real photography** | Curated (and load-verified) Unsplash photos — interiors for flats, facades for houses, mixed galleries — assigned deterministically per property type. |
+| **SEO** | Static listing pages with per-page `generateMetadata` (title/description/OG/Twitter/canonical), **`sitemap.xml`** (all 220 listings), **`robots.txt`**, and **schema.org JSON-LD** (`Offer` + `House`/`Apartment`) on every detail page. |
+| **Accessibility (barrier-free)** | Skip-to-content link, semantic landmarks, labelled controls, `tablist`/`radiogroup` roles, `aria-selected`/`aria-current`/`aria-pressed`, visible focus rings, and `prefers-reduced-motion` support. Works in light and dark themes with token-based contrast. |
 | **Data layer** | A pure, testable query module (`listings-repo`) behind versioned route handlers. TanStack Query on the client with `keepPreviousData` for flicker-free pagination. |
 | **Favourites (save a property)** | **Redux Toolkit** slice, persisted per signed-in user, with a live count badge and a dedicated page that resolves ids through a batch endpoint. |
 | **Saved searches** | **Redux Toolkit** slice — save the active filter set and re-run it later; deduped by query string. |
@@ -48,6 +51,9 @@ search, Redux + Context state management, and per-user persistence.
   params. Types are inferred, never hand-maintained.
 - **Detail pages are SSG for SEO + TTFB;** search is a dynamic client experience. Different
   rendering strategies for different needs, on purpose.
+- **SEO is built in, not bolted on.** Every listing is a pre-rendered, crawlable URL in the
+  sitemap, with structured data and canonical tags; `robots.txt` points crawlers at the
+  sitemap and away from the API. See "Is it SEO-friendly?" below.
 - **Facets are computed against the full dataset,** so the filter sidebar counts stay
   stable as you narrow a search.
 - **Redux for shared app data, Context for cross-cutting concerns.** Favourites and saved
@@ -97,6 +103,21 @@ src/
 scripts/generate-listings.ts # Faker seed generator (Indian market)
 test/                        # Jest + React Testing Library
 ```
+
+## Is it SEO-friendly?
+
+Yes — the SEO story is deliberate:
+
+- **Server-rendered, crawlable pages.** Listing detail pages are statically generated
+  (`generateStaticParams`), so every property is a real HTML URL a crawler can index.
+- **Rich metadata per page** via `generateMetadata`: unique `<title>`/description, Open
+  Graph + Twitter cards, and a **canonical** URL.
+- **`sitemap.xml`** (`app/sitemap.ts`) listing all 220 properties plus static pages, and
+  **`robots.txt`** (`app/robots.ts`) that references the sitemap and disallows `/api/`.
+- **Structured data**: schema.org **JSON-LD** (`Offer` wrapping `House`/`Apartment` with
+  price, beds, baths, floor size and address) on each listing for rich results.
+- **Semantic, accessible HTML** (headings, landmarks, alt text) — which is also good SEO.
+- Fast Core Web Vitals from SSG + `next/image` optimisation.
 
 ## Possible next steps
 

@@ -19,9 +19,23 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-surface/80 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 py-3">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-          <span aria-hidden className="text-primary text-xl">◈</span>
-          EstateFinder
+        <Link
+          href="/"
+          aria-label="Home Estate — home"
+          className="flex items-center gap-2 font-bold text-lg"
+        >
+          <span
+            aria-hidden
+            className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-fg"
+          >
+            {/* House / home mark */}
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 10.5 12 3l9 7.5" />
+              <path d="M5 9.5V21h14V9.5" />
+              <path d="M10 21v-6h4v6" />
+            </svg>
+          </span>
+          Home Estate
         </Link>
 
         <nav className="flex items-center gap-1 text-sm" aria-label="Primary">

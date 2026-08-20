@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getListingById, getListingIds } from '@/lib/listings-repo';
 import { PROPERTY_TYPE_LABELS } from '@/lib/types';
+import { SITE_URL } from '@/lib/site';
 import {
   formatArea,
   formatBeds,
@@ -29,6 +30,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title,
     description: listing.description.slice(0, 155),
+    alternates: { canonical: `${SITE_URL}/listings/${listing.id}` },
     openGraph: {
       title,
       description: `${formatBeds(listing.beds)} · ${formatArea(listing.area)} in ${listing.community}, ${listing.city}`,
@@ -52,8 +54,48 @@ export default async function ListingPage({ params }: Params) {
     { label: 'Listed', value: relativeDate(listing.createdAt) },
   ];
 
+  const isHouse =
+    listing.propertyType === 'villa' ||
+    listing.propertyType === 'independent-house';
+
+  // schema.org structured data for rich search results.
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Offer',
+    name: listing.title,
+    price: listing.price,
+    priceCurrency: 'INR',
+    availability: 'https://schema.org/InStock',
+    url: `${SITE_URL}/listings/${listing.id}`,
+    image: listing.images,
+    itemOffered: {
+      '@type': isHouse ? 'House' : 'Apartment',
+      name: listing.title,
+      description: listing.description.slice(0, 200),
+      numberOfBedrooms: listing.beds,
+      numberOfBathroomsTotal: listing.baths,
+      floorSize: {
+        '@type': 'QuantitativeValue',
+        value: listing.area,
+        unitCode: 'FTK',
+      },
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: listing.address,
+        addressLocality: listing.city,
+        addressRegion: listing.city,
+        addressCountry: 'IN',
+      },
+    },
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
+      <script
+        type="application/ld+json"
+        // Static, server-rendered data — safe to inline.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <nav className="mb-4 text-sm text-muted">
         <Link href="/" className="hover:text-foreground">Search</Link>
         <span className="mx-2" aria-hidden>/</span>

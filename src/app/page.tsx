@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { SearchExperience } from '@/components/search-experience';
 import { ListingGridSkeleton } from '@/components/listing-grid';
+import { PurposeTabs } from '@/components/purpose-tabs';
 
 export default function HomePage() {
   return (
@@ -13,9 +14,13 @@ export default function HomePage() {
           <p className="mt-2 max-w-2xl text-muted">
             Search{' '}
             <span className="font-medium text-foreground">apartments, villas and independent houses</span>{' '}
-            for sale and rent across Mumbai, Bengaluru, Delhi, Pune and Gurugram.
-            Every search is shareable via its URL.
+            to <span className="font-medium text-foreground">buy or rent</span> across
+            Mumbai, Bengaluru, Delhi, Pune and Gurugram. Every search is shareable
+            via its URL.
           </p>
+          <Suspense fallback={<div className="mt-5 h-11" />}>
+            <PurposeTabs />
+          </Suspense>
         </div>
       </section>
 
