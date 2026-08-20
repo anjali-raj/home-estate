@@ -1,7 +1,7 @@
 import type { Listing } from '@/lib/types';
 
 export const sampleListing: Listing = {
-  id: 'pf-0001',
+  id: 'he-0001',
   title: '3 BHK Apartment in Powai',
   description: 'A lovely home.\n\nWith two paragraphs.',
   propertyType: 'apartment',
@@ -15,7 +15,7 @@ export const sampleListing: Listing = {
   address: '12 Hill Road, Powai, Mumbai',
   lat: 19.12,
   lng: 72.9,
-  images: ['https://picsum.photos/seed/pf-1/800/600'],
+  images: ['https://picsum.photos/seed/he-1/800/600'],
   agent: { name: 'Asha Rao', agency: 'Acme Realtors', phone: '+91 90000 00000' },
   amenities: ['Gym', 'Lift'],
   furnished: true,

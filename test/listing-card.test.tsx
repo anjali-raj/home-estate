@@ -17,7 +17,7 @@ describe('<ListingCard />', () => {
     renderWithProviders(<ListingCard listing={sampleListing} />);
     expect(screen.getByRole('link')).toHaveAttribute(
       'href',
-      '/listings/pf-0001',
+      '/listings/he-0001',
     );
   });
 });

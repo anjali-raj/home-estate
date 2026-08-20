@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   filtersToQueryString,
   useListingFilters,
@@ -43,6 +43,7 @@ function describeFilters(f: Record<string, unknown>): string {
 
 export function SearchExperience() {
   const [filters, setFilters] = useListingFilters();
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   // The query string that hits the API — excludes empty values.
   const queryString = useMemo(
@@ -57,9 +58,43 @@ export function SearchExperience() {
   const savableFilters = { ...filters, page: null };
   const savableQuery = filtersToQueryString(savableFilters);
 
+  const activeFilterCount = [
+    filters.q,
+    filters.city,
+    filters.propertyType,
+    filters.minPrice,
+    filters.maxPrice,
+    filters.minBeds,
+    filters.minBaths,
+    filters.furnished,
+  ].filter(Boolean).length;
+
   return (
     <div className="mx-auto max-w-7xl gap-6 px-4 py-6 lg:grid lg:grid-cols-[300px_1fr]">
-      <aside className="mb-6 lg:mb-0">
+      {/* Mobile-only toggle: filters are a big panel, so they collapse on small
+          screens and are always shown from lg up. */}
+      <button
+        type="button"
+        onClick={() => setFiltersOpen((v) => !v)}
+        aria-expanded={filtersOpen}
+        aria-controls="filters-panel"
+        className="mb-4 flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface py-2.5 text-sm font-medium lg:hidden"
+      >
+        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+          <path d="M3 5h18M6 12h12M10 19h4" strokeLinecap="round" />
+        </svg>
+        {filtersOpen ? 'Hide filters' : 'Show filters'}
+        {activeFilterCount > 0 && (
+          <span className="rounded-full bg-primary px-1.5 text-xs text-primary-fg">
+            {activeFilterCount}
+          </span>
+        )}
+      </button>
+
+      <aside
+        id="filters-panel"
+        className={`mb-6 lg:mb-0 lg:block ${filtersOpen ? 'block' : 'hidden'}`}
+      >
         <div className="lg:sticky lg:top-20">
           <FiltersPanel facets={data?.facets} total={data?.total} />
         </div>

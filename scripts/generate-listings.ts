@@ -140,7 +140,7 @@ function makeListing(i: number): Listing {
       : `${beds} BHK ${typeLabel} in ${community}`;
 
   return {
-    id: `pf-${String(i + 1).padStart(4, '0')}`,
+    id: `he-${String(i + 1).padStart(4, '0')}`,
     title,
     description: faker.lorem.paragraphs({ min: 2, max: 3 }, '\n\n'),
     propertyType,

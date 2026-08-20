@@ -65,6 +65,15 @@ body {
   outline-offset: 2px;
 }
 
+/* Hide the native scrollbar on horizontal carousels (still scrollable/swipeable). */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Respect users who prefer reduced motion. */
 @media (prefers-reduced-motion: reduce) {
   *,

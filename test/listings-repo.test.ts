@@ -69,7 +69,7 @@ describe('queryListings', () => {
 
 describe('getListingById', () => {
   it('finds a known listing', () => {
-    expect(getListingById('pf-0001')?.id).toBe('pf-0001');
+    expect(getListingById('he-0001')?.id).toBe('he-0001');
   });
   it('returns undefined for an unknown id', () => {
     expect(getListingById('nope')).toBeUndefined();

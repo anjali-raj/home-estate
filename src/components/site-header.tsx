@@ -18,11 +18,11 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-surface/80 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 py-3">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
         <Link
           href="/"
           aria-label="Home Estate — home"
-          className="flex items-center gap-2 font-bold text-lg"
+          className="flex shrink-0 items-center gap-2 whitespace-nowrap font-bold text-lg"
         >
           <span
             aria-hidden
@@ -38,7 +38,10 @@ export function SiteHeader() {
           Home Estate
         </Link>
 
-        <nav className="flex items-center gap-1 text-sm" aria-label="Primary">
+        <nav
+          className="order-3 -mx-4 flex w-[calc(100%+2rem)] items-center gap-1 overflow-x-auto whitespace-nowrap px-4 text-sm no-scrollbar sm:order-none sm:mx-0 sm:w-auto sm:px-0"
+          aria-label="Primary"
+        >
           {NAV.map((item) => {
             const active =
               item.href === '/'
@@ -66,7 +69,7 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
           <ThemeToggle />
           <AuthButton />
         </div>

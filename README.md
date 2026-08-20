@@ -17,6 +17,8 @@ search, Redux + Context state management, and per-user persistence.
 | **Buy & rent** | Prominent **Buy / Rent / All** tabs plus a purpose filter, both driven by the same URL state. |
 | **Faceted search** | Keyword, city, purpose, type, price range, beds/baths, furnishing — all **URL-synced** via `nuqs`, so every search is shareable, bookmarkable and back-button-correct. |
 | **Real photography** | Curated (and load-verified) Unsplash photos — interiors for flats, facades for houses, mixed galleries — assigned deterministically per property type. |
+| **Card image carousel** | Every homepage card is a swipeable, scroll-snap image carousel (touch-swipe on mobile, hover arrows + dot indicators on desktop) — controls sit outside the card link so they stay valid and accessible. |
+| **Responsive** | Mobile-first layout: the header nav reflows to its own scrollable row, filters collapse behind a "Show filters" toggle on phones/tablets and become a sticky sidebar from `lg` up, and the card grid steps 1 → 2 → 3 columns. |
 | **SEO** | Static listing pages with per-page `generateMetadata` (title/description/OG/Twitter/canonical), **`sitemap.xml`** (all 220 listings), **`robots.txt`**, and **schema.org JSON-LD** (`Offer` + `House`/`Apartment`) on every detail page. |
 | **Accessibility (barrier-free)** | Skip-to-content link, semantic landmarks, labelled controls, `tablist`/`radiogroup` roles, `aria-selected`/`aria-current`/`aria-pressed`, visible focus rings, and `prefers-reduced-motion` support. Works in light and dark themes with token-based contrast. |
 | **Data layer** | A pure, testable query module (`listings-repo`) behind versioned route handlers. TanStack Query on the client with `keepPreviousData` for flicker-free pagination. |

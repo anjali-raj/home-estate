@@ -5,25 +5,25 @@ import { FavouriteButton } from '@/components/favourite-button';
 describe('<FavouriteButton />', () => {
   it('reflects and toggles favourite state in the Redux store', async () => {
     const user = userEvent.setup();
-    const { store } = renderWithProviders(<FavouriteButton id="pf-0001" />);
+    const { store } = renderWithProviders(<FavouriteButton id="he-0001" />);
 
     const btn = screen.getByRole('button', { name: /add to favourites/i });
     expect(btn).toHaveAttribute('aria-pressed', 'false');
 
     await user.click(btn);
 
-    expect(store.getState().favourites.ids).toContain('pf-0001');
+    expect(store.getState().favourites.ids).toContain('he-0001');
     expect(
       screen.getByRole('button', { name: /remove from favourites/i }),
     ).toHaveAttribute('aria-pressed', 'true');
 
     await user.click(btn);
-    expect(store.getState().favourites.ids).not.toContain('pf-0001');
+    expect(store.getState().favourites.ids).not.toContain('he-0001');
   });
 
   it('renders as already-favourited when the id is preloaded', () => {
-    renderWithProviders(<FavouriteButton id="pf-0001" />, {
-      favourites: ['pf-0001'],
+    renderWithProviders(<FavouriteButton id="he-0001" />, {
+      favourites: ['he-0001'],
     });
     expect(
       screen.getByRole('button', { name: /remove from favourites/i }),
