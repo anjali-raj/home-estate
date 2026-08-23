@@ -36,40 +36,40 @@ searches, full light/dark theming, accessibility, and a comprehensive Jest + RTL
 
 ## Features
 
-| Area | What it does |
-| --- | --- |
-| **Buy & rent** | Prominent **Buy / Rent / All** tabs plus a purpose filter, both driven by the same URL state. |
-| **Faceted search** | Keyword, city, purpose, property type, price range, min beds/baths, furnishing — all **URL-synced**, so every search is shareable, bookmarkable and back-button-correct. |
-| **Server-side query** | Filtering, sorting (newest / price / beds / area) and pagination all happen in a route handler, with stable facet counts. |
-| **Card image carousel** | Every homepage card is a swipeable, scroll-snap image carousel (touch-swipe on mobile; hover arrows + dot indicators on desktop). Controls live outside the card link so they stay valid and accessible. |
-| **Listing detail pages** | Statically generated per listing, with an image gallery, full specs, agent contact, breadcrumb, and structured data. |
-| **Favourites** | Save any property. Redux-backed, persisted per signed-in user, with a live count badge and a dedicated page. |
-| **Saved searches** | Save the active filter set and re-run it later; deduped by query string. |
-| **Auth (mock)** | Lightweight localStorage session (Context API) that namespaces each user's favourites & saved searches. Structured for a clean swap to NextAuth. |
-| **Theming** | Light / dark / system toggle (Context API), persisted, with a token-based palette that keeps contrast in both modes. |
-| **Real photography** | Curated, load-verified Unsplash photos — interiors for flats, facades for houses, mixed galleries — assigned deterministically by property type. |
-| **Responsive** | Mobile-first: header nav reflows to its own scrollable row, filters collapse behind a "Show filters" toggle below `lg` and become a sticky sidebar above it, card grid steps 1 → 2 → 3 columns. |
-| **SEO** | Per-page metadata, `sitemap.xml`, `robots.txt`, canonical URLs and schema.org JSON-LD. |
-| **Accessibility** | Skip link, semantic landmarks, ARIA roles/states, focus-visible rings, `prefers-reduced-motion`. |
-| **Tested** | 35 tests across 7 suites — reducers, query/format logic, and component tests (Jest + React Testing Library). |
+| Area                     | What it does                                                                                                                                                                                             |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Buy & rent**           | Prominent **Buy / Rent / All** tabs plus a purpose filter, both driven by the same URL state.                                                                                                            |
+| **Faceted search**       | Keyword, city, purpose, property type, price range, min beds/baths, furnishing — all **URL-synced**, so every search is shareable, bookmarkable and back-button-correct.                                 |
+| **Server-side query**    | Filtering, sorting (newest / price / beds / area) and pagination all happen in a route handler, with stable facet counts.                                                                                |
+| **Card image carousel**  | Every homepage card is a swipeable, scroll-snap image carousel (touch-swipe on mobile; hover arrows + dot indicators on desktop). Controls live outside the card link so they stay valid and accessible. |
+| **Listing detail pages** | Statically generated per listing, with an image gallery, full specs, agent contact, breadcrumb, and structured data.                                                                                     |
+| **Favourites**           | Save any property. Redux-backed, persisted per signed-in user, with a live count badge and a dedicated page.                                                                                             |
+| **Saved searches**       | Save the active filter set and re-run it later; deduped by query string.                                                                                                                                 |
+| **Auth (mock)**          | Lightweight localStorage session (Context API) that namespaces each user's favourites & saved searches. Structured for a clean swap to NextAuth.                                                         |
+| **Theming**              | Light / dark / system toggle (Context API), persisted, with a token-based palette that keeps contrast in both modes.                                                                                     |
+| **Real photography**     | Curated, load-verified Unsplash photos — interiors for flats, facades for houses, mixed galleries — assigned deterministically by property type.                                                         |
+| **Responsive**           | Mobile-first: header nav reflows to its own scrollable row, filters collapse behind a "Show filters" toggle below `lg` and become a sticky sidebar above it, card grid steps 1 → 2 → 3 columns.          |
+| **SEO**                  | Per-page metadata, `sitemap.xml`, `robots.txt`, canonical URLs and schema.org JSON-LD.                                                                                                                   |
+| **Accessibility**        | Skip link, semantic landmarks, ARIA roles/states, focus-visible rings, `prefers-reduced-motion`.                                                                                                         |
+| **Tested**               | 35 tests across 7 suites — reducers, query/format logic, and component tests (Jest + React Testing Library).                                                                                             |
 
 ---
 
 ## Tech stack
 
-| Concern | Choice |
-| --- | --- |
-| Framework | **Next.js 16** (App Router) + **React 19** |
-| Language | **TypeScript** (strict) |
-| Styling | **Tailwind CSS v4** with CSS-variable design tokens |
-| Shared client state | **Redux Toolkit** + **react-redux** (favourites, saved searches) |
-| Cross-cutting state | **React Context API** (auth session, theme) |
-| Server-state / fetching | **TanStack Query** (`keepPreviousData` for flicker-free paging) |
-| URL state | **nuqs** (type-safe search params) |
-| Validation | **Zod** (one schema validates seed data *and* API query params) |
-| Mock data | **Faker** (deterministic seed) |
-| Testing | **Jest** + **React Testing Library** + user-event |
-| Tooling | ESLint (`next/core-web-vitals`), pnpm |
+| Concern                 | Choice                                                           |
+| ----------------------- | ---------------------------------------------------------------- |
+| Framework               | **Next.js 16** (App Router) + **React 19**                       |
+| Language                | **TypeScript** (strict)                                          |
+| Styling                 | **Tailwind CSS v4** with CSS-variable design tokens              |
+| Shared client state     | **Redux Toolkit** + **react-redux** (favourites, saved searches) |
+| Cross-cutting state     | **React Context API** (auth session, theme)                      |
+| Server-state / fetching | **TanStack Query** (`keepPreviousData` for flicker-free paging)  |
+| URL state               | **nuqs** (type-safe search params)                               |
+| Validation              | **Zod** (one schema validates seed data _and_ API query params)  |
+| Mock data               | **Faker** (deterministic seed)                                   |
+| Testing                 | **Jest** + **React Testing Library** + user-event                |
+| Tooling                 | ESLint (`next/core-web-vitals`), pnpm                            |
 
 ---
 
@@ -101,16 +101,16 @@ pnpm start
 
 ## Available scripts
 
-| Script | What it does |
-| --- | --- |
-| `pnpm dev` | Start the Next.js dev server (hot reload) |
-| `pnpm build` | Production build (also type-checks and pre-renders all pages) |
-| `pnpm start` | Serve the production build |
-| `pnpm lint` | ESLint (`--max-warnings=0` in CI spirit) |
-| `pnpm test` | Run the Jest + RTL suite once |
-| `pnpm test:watch` | Run tests in watch mode |
-| `pnpm test:cov` | Run tests with a coverage report |
-| `pnpm data:generate` | Regenerate `src/data/listings.json` from the Faker seed |
+| Script               | What it does                                                  |
+| -------------------- | ------------------------------------------------------------- |
+| `pnpm dev`           | Start the Next.js dev server (hot reload)                     |
+| `pnpm build`         | Production build (also type-checks and pre-renders all pages) |
+| `pnpm start`         | Serve the production build                                    |
+| `pnpm lint`          | ESLint (`--max-warnings=0` in CI spirit)                      |
+| `pnpm test`          | Run the Jest + RTL suite once                                 |
+| `pnpm test:watch`    | Run tests in watch mode                                       |
+| `pnpm test:cov`      | Run tests with a coverage report                              |
+| `pnpm data:generate` | Regenerate `src/data/listings.json` from the Faker seed       |
 
 ---
 
@@ -256,4 +256,4 @@ The app is intentionally structured so a real backend can be added without touch
 
 ---
 
-*Demo project. Listings, prices and agents are synthetic; photos are from Unsplash.*
+_Demo project. Listings, prices and agents are synthetic; photos are from Unsplash._
